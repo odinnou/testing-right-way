@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <LangVersion>10.0</LangVersion>
+        <!--Lightweight code-->
+        <ImplicitUsings>enable</ImplicitUsings>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.1" />
+        <PackageReference Include="xunit" Version="2.4.2" />
+        <!--Needed for Visual Studio setup-->
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="TngTech.ArchUnitNET.xUnit" Version="0.10.4" />
+        <!--AutoFixture with xUnit integration-->
+        <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
+        <PackageReference Include="FluentAssertions" Version="6.7.0" />
+        <PackageReference Include="Moq" Version="4.18.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Service\Service.csproj" />
+    </ItemGroup>
+
+</Project>
