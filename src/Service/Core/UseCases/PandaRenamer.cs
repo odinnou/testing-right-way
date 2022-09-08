@@ -13,6 +13,11 @@ namespace Service.Core.UseCases
 
         public Panda Execute(Guid pandaId, string newName)
         {
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                throw new ArgumentNullException(nameof(newName));
+            }
+
             Panda panda = _pandaFetcher.Execute(pandaId);
 
             panda.Name = newName;
