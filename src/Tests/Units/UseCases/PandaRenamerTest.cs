@@ -11,20 +11,24 @@ namespace Tests.Units.UseCases
         private readonly Mock<IPandaFetcher> _pandaFetcher;
         private readonly PandaRenamer _pandaRenamer;
 
+        // Setup our test runner
         public PandaRenamerTest()
         {
             _pandaFetcher = new Mock<IPandaFetcher>();
 
+            // Simulate dependency injection (Moq).
             _pandaRenamer = new PandaRenamer(_pandaFetcher.Object);
         }
 
+        // Theory (xUnit) : enable parameterised tests.
+        // AutoData (AutoFixure) : enable parameters auto generation.
         [Theory, AutoData]
         public void Should_throw_ArgumentNullException_when_provided_name_is_empty_and_never_called_PandaFetcher(Guid pandaId)
         {
             // act
             Action result = () => { _pandaRenamer.Execute(pandaId, string.Empty); };
 
-            // assert
+            // assert (FluentAssertions)
             result.Should().Throw<ArgumentNullException>().And.Message.Should().Contain("newName");
             _pandaFetcher.Verify(mock => mock.Execute(It.IsAny<Guid>()), Times.Never);
         }
@@ -32,7 +36,7 @@ namespace Tests.Units.UseCases
         [Theory, AutoData]
         public void Should_returns_an_updated_panda_with_a_new_name(Guid pandaId, string newName, Panda panda)
         {
-            // arrange
+            // arrange (Moq)
             _pandaFetcher.Setup(mock => mock.Execute(pandaId)).Returns(panda);
 
             // act
@@ -41,6 +45,7 @@ namespace Tests.Units.UseCases
             // assert
             renamedPanda.Should().Be(panda);
             renamedPanda.Name.Should().Be(newName);
+            // We don't need to use .Verify here because the mock step is sufficient to assert that.
         }
     }
 }
